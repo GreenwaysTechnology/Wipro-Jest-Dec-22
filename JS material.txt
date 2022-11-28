@@ -1,0 +1,514 @@
+			   Jest
+.....................................................................................
+What is Jest?
+
+  Jest is delightful javascript testing framework .
+Jest is just javascript  testing tool only which is not dependant any js framework o or lib - like angular,react,vue,jquery....
+
+Before start jest we need to have good knowledge js.
+
+1.javascript functional programming features such as higher order functions
+2.javascript async programming styles - like callbacks,Promises,async and await...
+3.javascript objects - literal objects,constructors based...
+
+Javascript :
+ =>Programming language 
+     ->Functional , object based language.
+ =>ES - ecma script /es - es 1,3,4,5,6,7 | ,8,9,10
+.....................................................................................
+Where can i run js?
+
+1.browsers
+2.commandline - node.js
+
+Setup:
+1.node.js
+2.vs code
+
+
+project setup:
+E:\session\wipro\jestjs>mkdir jsapps
+
+E:\session\wipro\jestjs>cd jsapps
+
+E:\session\wipro\jestjs\jsapps>mkdir src
+
+E:\session\wipro\jestjs\jsapps>code .
+
+create html file called index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JestTraining</title>
+</head>
+<body>
+    <h1>Jest Apps</h1>
+    <script src="src/index.js"></script>
+</body>
+</html>
+....................................................................................
+
+Language fundamentals:
+
+There are two types of language based on data types
+
+1.strongly typed/static typed
+ int a
+ float f
+  type of variable is represented
+  we can avoid type mismatch during compile time
+
+2.weakly typed/dynamic typed
+  var a 
+    here no type is declared for a 
+ now a can hold any type of value
+
+js is dynamic typed.
+
+JS is dynamic typed language, the data type is not declared,type of variable is understood during runtime.
+
+variables are declared using "var,let,const,this" keywords
+
+es 6 variables are declared using "let and const"
+
+let | const variableName = value(literal)
+
+types of literals
+
+1.string
+2.number
+3.boolean
+4.undefined
+5.NaN
+6.infinity
+7.function
+8.null
+9.object
+
+types
+1.string
+2.number - number,infinity,NaN
+3.boolean
+4.undefined
+5.function
+6.object - null, object
+
+
+
+
+//variable declaration and values(literals) assigments
+
+//strings : '',"",``
+var firstName = 'Subramanian'
+let lastName = 'Murugan'
+console.log("Name " + firstName + lastName)
+console.log("Name ", firstName, lastName)
+console.log(`Name  ${firstName}  ${lastName}`)
+
+//numbers
+let salary = 1000
+let totalSalary = salary * 10
+console.log(`Salary ${salary} Total Salary ${totalSalary}`)
+
+//booleans
+let isValid = true
+let isEnabled = false
+console.log(`Valid ${isValid} Enabled ${isEnabled}`)
+
+//undefined 
+let qty;
+console.log(`Qty ${qty}`)
+
+//NaN - not a number - it is runtime numerical error code.
+//NaN is bug when get NaN you have to fix it. 
+//NaN you get when you do computation against undefined variables
+
+let price = 100
+let totalPrice = qty * price
+console.log(`Qty ${qty} price ${price} TotalPrice ${totalPrice}`)
+
+//infinity
+let avgPrice = price / 0
+console.log(`Avg  Price ${avgPrice}`)
+.....................................................................................
+....................................................................................
+				Advanced booleans
+...................................................................................
+
+falsy values:
+
+ In javascript every thing is true except the follwing values
+
+1.boolean false
+2.0
+3.undefined
+4.NaN
+5."",''(empty string)
+6.null
+
+let myvar = ""
+if (myvar) {
+    console.log("valid")
+} else {
+    console.log("Invalid")
+}
+
+myvar = 0
+if (myvar) {
+    console.log("valid")
+} else {
+    console.log("Invalid")
+}
+myvar = undefined
+if (myvar) {
+    console.log("valid")
+} else {
+    console.log("Invalid")
+}
+myvar = NaN
+if (myvar) {
+    console.log("valid")
+} else {
+    console.log("Invalid")
+}
+myvar = null
+if (myvar) {
+    console.log("valid")
+} else {
+    console.log("Invalid")
+}
+myvar = false
+if (myvar) {
+    console.log("valid")
+} else {
+    console.log("Invalid")
+}
+
+myvar = 100
+if (myvar) {
+    console.log("valid")
+} else {
+    console.log("Invalid")
+}
+.....................................................................................
+				Operators
+
+1.equal operators
+  ==  -  only test values
+  === -  test value + type -Recommended
+//operators
+
+let a = 100
+let b = 100
+if (a == b) {
+    console.log("equal")
+} else {
+    console.log("not equal")
+}
+
+let x = "100" //string
+let y = 100 //number
+if (x == y) {
+    console.log("equal")
+} else {
+    console.log("not equal")
+}
+//this is right comparsion
+if (x === y) {
+    console.log("equal")
+} else {
+    console.log("not equal")
+}
+...................................................................................
+			  Tenary operator
+...................................................................................
+
+=> To replace if..else
+=> To make code more simple and concise
+//Tenary operator
+
+let isEnabled = true
+
+if (isEnabled) {
+    console.log('Enabled')
+} else {
+    console.log('disabled')
+}
+//
+isEnabled ? console.log('Enabled') : console.log('disabled')
+
+let start = 0;
+start ? console.log('start') : console.log('dont start')
+...................................................................................
+
+//let vs const 
+let a = 10
+console.log(`A ${a}`)
+a = 900
+console.log(`A ${a}`)
+
+const b =100
+console.log(`B ${b}`)
+b=900
+console.log(`B ${b}`)
+.....................................................................................
+.....................................................................................
+			 functions and function literals
+.....................................................................................
+
+function is unit of representation which holds the js code.
+
+=>How to declare functions
+=>How to pass args and parameters
+=>How to return values from the functions
+=>How to declare functions with literal syntax
+=>ES 6 functions called -Arrow
+=>functional programming principles and implementations
+....................................................................................
+
+=>How to declare functions
+
+//function declaration
+function sayHello() {
+    //body of the function 
+    console.log('sayHello')
+}
+//invoke function 
+sayHello()
+
+=>How to pass args and parameters
+//function args and parameters
+
+function sayHello(name) {
+    console.log(`Hello ${name}`)
+}
+sayHello('Subramanian')
+sayHello()
+
+//default args 
+function multiply(a = 0, b = 0) {
+    console.log(`a ${a} b ${b}`)
+    let c = a * b
+    console.log(`The Result is ${c}`)
+}
+multiply(10, 10)
+multiply()
+....
+=>How to return values from the functions
+
+function getName() {
+    return 'Subramanian'
+}
+console.log(getName())
+function add(a = 0, b = 0) {
+    return a + b
+}
+console.log(add())
+console.log(add(10,10))
+....................................................................................
+				Higher order functions
+....................................................................................
+				Function as Literal(value)
+....................................................................................
+
+Like numbers,strings,booleans, functions also literals(values)
+
+let a =10 //10 value(literal)
+let b="hello" //"hello" (literal)
+let c=true //(literal)
+
+since function is literal can be assigned to a variable, can be passed as parameter to another function, can be returned from another function.
+
+functions are assigned to variables.
+That variable can be used to invoke that function.
+
+
+//hello is just variable,holding function literal as value 
+//hello can be used to invoke that function 
+//if function has no name , anonmous function 
+
+//function declaration
+
+//regular function 
+function sayHello() {
+    return 'Hello'
+}
+//function invcation 
+console.log(sayHello())
+
+//assign the function inside variable 
+let hello = sayHello;
+//we can invoke function using hello variable 
+console.log(hello())
+//anonmous functions :function without name 
+let hai = function () {
+    console.log('Hai')
+}
+hai()
+//args and parameters in the anonmous function 
+let add = function (a = 0, b = 0) {
+    return a + b
+}
+console.log(add(10,10))
+console.log(add())
+....................................................................................
+
+ES 6 arrow functions:
+......................
+
+To eleminate es 5 anonmous functions.
+//arrow functions 
+
+//es 5 function 
+let sayHello = function () {
+    console.log('Hello')
+}
+//es 6 arrow function 
+let sayHai = () => {
+    console.log('hai')
+}
+sayHai()
+//code refactoring : 
+//if function has only one line of code - remove {}
+
+let sayGreet = () => console.log('greet')
+
+//args and arrow 
+let add = (a = 0, b = 0) => {
+    let c = a + b
+    return c
+}
+console.log(`The add function ${add(10, 10)}`)
+//if fun has only return statement, we can remove {} and return statement
+add = (a = 0, b = 0) => a + b
+
+console.log(`The add function ${add(10, 10)}`)
+
+//if fun takes single arg,without default value , return the same,
+//we can remove () and {}
+let stockValue = value => value
+console.log(stockValue(10))
+...................................................................................
+			Function as parameters - higher order function
+................................................................................
+How to pass function as param?
+
+es 5 style and es 6 style - arrow
+
+//higher order function  - function as param
+
+function add(a, b) {
+    return a + b
+}
+let x = 10
+let y = 90
+console.log(add(x, y))
+console.log(add(12, 12))
+
+function sayGreet(greet) {
+    greet()
+}
+let hai = function () {
+    console.log('hai')
+}
+sayGreet(hai)
+
+sayGreet(function () {
+    console.log('Hai inline')
+})
+.......
+
+hof with args
+
+function sayGreet(greet) {
+    greet('Subramanian')
+}
+let hai = function (name = '') {
+    console.log(`Hai ${name}`)
+}
+sayGreet(hai)
+sayGreet(function (name = '') {
+    console.log(`Hai ${name}`)
+})
+
+...
+arrow and hof
+
+let sayGreet = greet => greet('Subramanian')
+
+sayGreet(function (name = '') {
+    console.log(`Hai ${name} `)
+})
+sayGreet((name = '') => console.log(`Hai ${name}`))
+...................................................................................
+
+Complex higher order functions:
+//
+
+const login = (userName, password, resolve, reject) => {
+    if (userName === 'admin' && password === 'admin') {
+        resolve('Login success')
+    } else {
+        reject('Login failed')
+    }
+}
+login('admin', 'admin', status => console.log(status), err => console.log(err))
+
+login('foo', 'bar', status => console.log(status), err => console.log(err))
+
+const test = (title, callback) => {
+    callback(title)
+}
+
+function expect(res) {
+    console.log(res)
+}
+
+test('adds 1 + 2 to equal to 3', () => {
+    expect('test passd')
+})
+....................................................................................
+How to return function from another function?
+//return function from another function .
+function counter() {
+    //inner function 
+    return function () {
+        return 10
+    }
+}
+const func = counter()
+console.log(func())
+
+let inc = () => {
+    //inner function 
+    return () => {
+        return 10
+    }
+}
+
+const func1 = counter()
+console.log(func1())
+
+inc = () => () => 10 
+console.log(inc()())
+.....................................................................................
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
