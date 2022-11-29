@@ -495,6 +495,987 @@ console.log(func1())
 inc = () => () => 10 
 console.log(inc()())
 .....................................................................................
+				Objects
+.....................................................................................
+
+How to create objects?
+
+1.Using constructors /constructors pattern
+  using functions - es 5 style
+  using classes -  es 6 style
+2.literal pattern
+
+
+//constructor patterns
+function Employee() {
+    //instance variables
+    this.id = 1
+    this.name = 'Subramanian'
+    //instance methods
+    this.calculate = function () {
+        return 100
+    }
+}
+//
+let emp = new Employee()
+console.log(`id ${emp.id} Name ${emp.name} Salart ${emp.calculate()}`)
+
+
+Constructor parameters:
+//constructor parameters
+function Employee(id = 1, name = 'Subramanian') {
+    //instance variables
+    this.id = id 
+    this.name = name
+    //instance methods
+    this.calculate = function () {
+        return 100
+    }
+}
+//
+let emp = new Employee(34,'Ram')
+console.log(`id ${emp.id} Name ${emp.name} Salary ${emp.calculate()}`)
+
+//how to declare es 6 class.
+
+//constructor parameters
+class Employee {
+    constructor(id = 1, name = 'Subramanian') {
+        //instance variables
+        this.id = id
+        this.name = name
+    }
+    //instance methods
+    calculate() {
+        return 100
+    }
+}
+//
+let emp = new Employee(34, 'Ram')
+console.log(`id ${emp.id} Name ${emp.name} Salary ${emp.calculate()}`)
+...................................................................................
+
+Literal object:
+..............
+//ES 5/6 literal object 
+
+const emp = {
+    id: 1,
+    name: 'subramanian',
+    calculate: function () {
+        return 100
+    }
+}
+console.log(emp.id,emp.name,emp.calculate())
+....................................................................................
+			  Async Programming
+...................................................................................
+
+What is async programming?
+ The application runtime which never blocks the current thread which is running the code.
+
+ Any task related io,cup intensive operations are executed by a separate thread of exeution at kernal level.
+
+Js supports async program by default...
+
+
+Async programming implementations;
+
+1.callback based implementation
+2.Promises with then and catch
+3.Promises with async await
+
+Req:
+1.OS should support async programming at low level
+2.Application runtime like js engine should support async at low level
+3.we need async apis in order to write 
+
+Js async apis
+1.timer
+2.ajax 
+
+sync api:
+
+
+function start() {
+    return 'start '
+}
+function end() {
+    return 'end'
+}
+function sayHello() {
+    return 'hello'
+}
+//sync style : every function has to be completed before moving to next function 
+console.log(start())
+console.log(sayHello())
+console.log(end())
+
+
+callback with timers:
+.....................
+
+
+function start() {
+    return 'start '
+}
+function end() {
+    return 'end'
+}
+function sayHello(callback) {
+    //async api : timers
+    setTimeout(callback, 5000, 'Delay')
+}
+//sync style : every function has to be completed before moving to next function 
+console.log(start())
+sayHello(function (message) {
+    console.log(message)
+})
+console.log(end())
+.....................................................................................
+function start() {
+    return 'start '
+}
+function end() {
+    return 'end'
+}
+const sayHello = callback => {
+    setTimeout(callback, 5000, 'Delay')
+}
+//sync style : every function has to be completed before moving to next function 
+console.log(start())
+sayHello(message => console.log(message))
+console.log(end())
+....................................................................................
+				async composition/callback composition
+.....................................................................................
+
+The out put of one callback will be input to another callback - callback nesting.
+
+//The output of one callback will be input to another callback
+
+const getUser = (resolve, reject) => {
+    let user = {
+        id: 1,
+        name: 'admin'
+    }
+    if (user) {
+        setTimeout(resolve, 1000, user)
+    } else {
+        setTimeout(reject, 1000, { error: 'User not found' })
+    }
+}
+const login = (user, resolve, reject) => {
+    if (user.name === 'admin') {
+        setTimeout(resolve, 1000, 'Login success')
+    } else {
+        setTimeout(reject, 1000, 'Login Failed')
+    }
+}
+const dashboard = (status, resolve, reject) => {
+    if (status === 'Login success') {
+        setTimeout(resolve, 1000, 'Welcome to Admin')
+    } else {
+        setTimeout(reject, 1000, 'Welcome to Guest')
+    }
+}
+
+function main() {
+    //callback compostion
+    getUser(user => {
+        login(user,
+            status => {
+                dashboard(status, adminPage => {
+                    console.log(adminPage)
+                }, err => {
+                    console.log(err)
+                })
+            }, err => {
+                console.log(err)
+            })
+    }, err => {
+        console.log(err)
+    })
+
+}
+main()
+
+
+    getUser(user => {
+        login(user,
+            status => {
+                dashboard(status, adminPage => {
+                    console.log(adminPage)
+                }, err => {
+                    console.log(err)
+                })
+            }, err => {
+                console.log(err)
+            })
+    }, err => {
+        console.log(err)
+    })
+
+In the above code, will you able 
+to understand the code quickly, 
+scalable
+maintainable
+
+if you say no
+   "Callback Hell"
+
+What is callback hell, the problem of writing complex callback based async program.
+...................................................................................
+				 Promises
+....................................................................................
+
+Promise is design pattern used to abstract complex callback based programs..
+
+Since Promise is design pattern we need implementations
+
+JQuery is the first framework who introduced promise design pattern and implmentation.
+
+ES 6 Promises are netural language dependant object.
+
+.....................................................................................
+			  Promise Implementation
+.....................................................................................
+
+Features of Promise Object:
+1.Promise by deafult is Async. Which implements timer api with 0 ms .
+2.Promise can be used with any async callback based  implementations.
+
+
+Objective:
+
+ To remove callbacks in async/non blocking code. write cleaner async programming.
+ To remove complex callback chaining code.
+
+
+Difference between callbacks and promises:
+
+Essentially, a promise is a returned object to which you attach callbacks, instead of passing callbacks into a function.
+
+....................................................................................
+
+		Promise Implemenation: Object Object creations
+...................................................................................
+
+1. Create Promise Object from Promise contructor
+      new Promise()
+2. Create Promise object from factory apis 
+      Promise.resolve() / Promise.reject()
+
+Promise object methods:
+
+1.then - success
+2.catch - errors
+3.finally - clean up
+
+factory api to create Promise object
+4.resolve
+5.reject
+.......................................
+6.all
+7.race
+
+1.Promise factory api
+   -success - resolve
+   -failure - reject
+
+
+//basic promise implementation:
+//In promises , you dont need to pass function as parameter
+
+Promise with Success and also ensure that Promise is async.
+//how write promise : factory api and constructor api 
+//Promises are by default async 
+
+function block(message) {
+    console.log(message)
+}
+function delay() {
+    return Promise.resolve('ok!')
+
+}
+block('start')
+delay().then(res => console.log(res))
+block('end')
+
+
+promise error
+//how write promise : factory api and constructor api 
+//Promises are by default async 
+
+function block(message) {
+    console.log(message)
+}
+function delay() {
+    return Promise.reject(new Error('something went wrong'))
+
+}
+block('start')
+delay().catch(err => console.log(err))
+block('end')
+...............
+Promise with success and failure
+
+function block(message) {
+    console.log(message)
+}
+function login(userName, passwrod) {
+    if (userName === 'admin' && passwrod == 'admin') {
+        return Promise.resolve('login success')
+    } else {
+        return Promise.reject('login failed')
+    }
+}
+block('start')
+login('admin', 'admin').then(res => console.log(res)).catch(err => console.log(err))
+block('end')
+...............................................................................
+
+i want to return promise after 1ms ,
+
+function block(message) {
+    console.log(message)
+}
+function login(userName, passwrod) {
+    if (userName === 'admin' && passwrod == 'admin') {
+        return new Promise((resolve, reject) => {
+            setTimeout(resolve, 5000, 'Login success')
+        })
+    } else {
+        return new Promise((resolve, reject) => {
+            setTimeout(reject, 5000, 'Login failed')
+        })
+    }
+}
+block('start')
+login('admin', 'admin').then(res => console.log(res)).catch(err => console.log(err))
+block('end')
+....................................................................................
+				Callback hell and promises
+....................................................................................
+//The output of one callback will be input to another callback
+
+const getUser = () => {
+    let user = {
+        id: 1,
+        name: 'admin'
+    }
+    return new Promise((resolve, reject) => {
+        if (user) {
+            setTimeout(resolve, 1000, user)
+        } else {
+            setTimeout(reject, 1000, { error: 'User not found' })
+        }
+    })
+}
+
+
+const login = user => {
+    return new Promise((resolve, reject) => {
+        if (user.name === 'admin') {
+            setTimeout(resolve, 1000, 'Login success')
+        } else {
+            setTimeout(reject, 1000, 'Login Failed')
+        }
+    })
+}
+const dashboard = status => {
+    return new Promise((resolve, reject) => {
+        if (status === 'Login success') {
+            setTimeout(resolve, 1000, 'Welcome to Admin')
+        } else {
+            setTimeout(reject, 1000, 'Welcome to Guest')
+        }
+    })
+}
+
+function main() {
+    //callback compostion
+    // getUser(user => {
+    //     login(user,
+    //         status => {
+    //             dashboard(status, adminPage => {
+    //                 console.log(adminPage)
+    //             }, err => {
+    //                 console.log(err)
+    //             })
+    //         }, err => {
+    //             console.log(err)
+    //         })
+    // }, err => {
+    //     console.log(err)
+    // })
+
+    getUser()
+        .then(user => {
+            return login(user)
+        }).then(status => {
+            return dashboard(status)
+        })
+        .then(page => {
+            console.log(page)
+        }).catch(err => console.log(err))
+}
+main()
+...................................................................................
+async..await
+//The output of one callback will be input to another callback
+
+const getUser = () => {
+    let user = {
+        id: 1,
+        name: 'admin'
+    }
+    return new Promise((resolve, reject) => {
+        if (user) {
+            setTimeout(resolve, 1000, user)
+        } else {
+            setTimeout(reject, 1000, { error: 'User not found' })
+        }
+    })
+}
+
+
+const login = user => {
+    return new Promise((resolve, reject) => {
+        if (user.name === 'admin') {
+            setTimeout(resolve, 1000, 'Login success')
+        } else {
+            setTimeout(reject, 1000, 'Login Failed')
+        }
+    })
+}
+const dashboard = status => {
+    return new Promise((resolve, reject) => {
+        if (status === 'Login success') {
+            setTimeout(resolve, 1000, 'Welcome to Admin')
+        } else {
+            setTimeout(reject, 1000, 'Welcome to Guest')
+        }
+    })
+}
+
+async function main() {
+    //callback compostion
+    // getUser(user => {
+    //     login(user,
+    //         status => {
+    //             dashboard(status, adminPage => {
+    //                 console.log(adminPage)
+    //             }, err => {
+    //                 console.log(err)
+    //             })
+    //         }, err => {
+    //             console.log(err)
+    //         })
+    // }, err => {
+    //     console.log(err)
+    // })
+
+    // getUser()
+    //     .then(user => {
+    //         return login(user)
+    //     }).then(status => {
+    //         return dashboard(status)
+    //     })
+    //     .then(page => {
+    //         console.log(page)
+    //     }).catch(err => console.log(err))
+
+    try {
+        const user = await getUser()
+        const status = await login(user)
+        const page = await dashboard(status)
+        console.log(user, status, page)
+    }
+    catch (err) {
+        console.log(err)
+    }
+}
+main()
+.....................................................................................
+				Commonjs
+
+
+
+In java Modularity , is presented via "Packages"
+
+Package organize the code  logically.
+
+Customer.java
+
+package com.ibm.cms
+
+public class Customer{}
+
+Java organizes code folders and files Physically.
+
+d:/javaapps/src/
+    com/ibm/cms/Customer.java
+
+What about javascript Modularity?
+
+ Javascript is file based modularity physically
+ but logically there is no such modularity at language level.
+
+collection of variable declarations and function.
+
+Once js started growing in large scale, dev struck to organize code.
+
+2000, Smart developers started thinking about how to modualrize js code.
+ 
+
+Module design patterns came.
+
+1.Namespace design pattern : 2000 : jquery
+2.AMD -Async Module Defintion : dojo
+---------------------------------------------------------
+3.CJS - Common JS =  namespace + amd:2005 on wards
+4.ES 6 Module design pattern:2012-2015  = amd + cjs
+------------------------------------------------------------
+5.System :2007 = AMD = CJS + ES 6
+6.UMD :2008 = NAMESPACE + AMD + CJS = ES 6
+....................................................................................
+				Modualrity-Commonjs-CJS
+.....................................................................................
+
+How to share code? How to import code?
+
+ Code:
+  Could be variables,functions,classes.
+  Variables can have any literal string,numbers,boolean,objects,functions...
+
+src
+  |
+  subfolders
+|
+index.js
+
+Sharing code :
+
+Keywords
+exports
+module.exports
+
+Imporing code:
+require('fileName')
+require('folderName/fileName')
+
+exports:
+ Used to share more code from the single file.
+ exports packs the entire code into one single js object and returns that object
+
+
+src/mylib.js
+//code ; variables; functions
+
+//exports
+exports.name = 'Subramanian'
+exports.city = 'coimbatore'
+exports.id = 1
+exports.status = true
+exports.calculate = function () {
+    return 1
+}
+exports.skills = ['javascript', 'java']
+
+src/index.js
+const info = require('./mylib')
+console.log(info)
+
+
+index.js:1 Uncaught ReferenceError: require is not defined
+    at index.js:1:14
+(anonymous) @ index.js:1.
+
+because browser does not support commonjs directly.
+
+How to run commonjs code?
+ we need to use build system.
+
+Using build tools:
+.................
+webpack
+
+How to install webpack in our project?
+
+Steps:
+
+1.make sure that you have package.json file
+ if not , create package.json file
+
+npm init  --yes
+
+2.install webpack
+  npm install webpack webpack-cli --save-dev
+
+3.add webpack.config.js in the project root dir
+
+const path = require('path');
+
+module.exports = {
+  entry: './src/index.js',
+  mode:'development',
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'bundle.js',
+  },
+};
+
+4.build /bundle your code
+ open package.json
+ add entry into scripts
+
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compile": "tsc",
+    "build": "webpack --watch"
+  },
+
+5.start bundling
+  open cmd and run the following command
+npm run build
+
+> es6-apps@1.0.0 build
+> webpack
+
+asset bundle.js 5.19 KiB [emitted] (name: main)
+runtime modules 670 bytes 3 modules
+cacheable modules 758 bytes
+  ./src/index.js 146 bytes [built] [code generated]
+  ./src/mylib.js 612 bytes [built] [code generated]
+webpack 5.70.0 compiled successfully in 113 ms
+
+6.add bundle file inside index.html
+     <script src="dist/bundle.js"></script>
+..
+
+src/index.js
+
+const info = require('./mylib')
+const CustomerService = require('./services/customer.service')
+
+console.log(info)
+console.log(info.name,info.status)
+let customerService = new CustomerService()
+console.log(customerService.findAll())
+.....................................................................................
+				NPM - node package manager
+.....................................................................................
+
+It is tool used to manage life cycle of any js project.
+
+Every js project, must have one file called package.json
+
+when you setup project, you have to create package.json file
+
+npm init
+
+{
+  "name": "jsapps",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.0"
+  }
+}
+
+node_modules:
+ -It is going to hold all dependencies for the project.
+
+how to install packages?
+
+How to install node packages which was distributed by others?
+
+npm install [<package-name>]
+
+You can find out the packages from npm registry server
+
+npm install | i  lodash --options
+
+npm i lodash 
+
+No options are given by default "--save"
+
+Options:
+
+ --save
+     for production + dev
+ --save-dev
+     -for only for dev 
+ --production
+    -for only production
+  -g
+    -for tool purpose -dev
+
+
+Application mode
+
+1.dev
+2.test
+3.prod
+
+dev : any dependency required for development only
+  --save-dev
+test : 
+   any dependency required for development only - test
+   --save-dev
+prod:
+  dependency used in dev and production... 
+  --save
+"dependencies": {
+    "lodash": "^4.17.21"
+  }
+....................................................................................
+				How to create npm package
+
+Steps:
+
+1.create folder
+>mkdir mynpm-apps
+>cd mynpm-apps
+>mkdir src
+
+2.create package.json
+
+Before create you have to ensure that npm has been installed.
+
+npm init <initalizer>
+
+npm init
+This utility will walk you through creating a package.json file.
+It only covers the most common items, and tries to guess sensible defaults.
+
+See `npm help init` for definitive documentation on these fields
+and exactly what they do.
+
+
+package.json
+
+{
+  "name": "mynpmapps",
+  "version": "1.0.0",
+  "description": "This is demo package",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "my",
+    "demo",
+    "package"
+  ],
+  "author": "Subramanian Murugan",
+  "license": "ISC"
+}
+
+name:
+ This is used to publish package into registry
+
+version:
+   if you publish package into registry, which is differentiated by "version"
+
+"1.0.0" - version no is based on the concept called "SEM Ver" concept- Semantic versioning.
+ Major.minor.patch
+
+main:
+  It is main file used /entry file in the package , generally it would index.js or main.js
+
+description:
+  It explains the nature of packages- what is this packge.
+
+Keywords:
+  Used to discover your packages using npm search command
+
+author:
+  Who is author of this package
+
+license:
+  You should specify a license for your package so that people know how they are permitted to use it.
+.................................................................................
+			   node_modules
+.................................................................................
+
+  it is folder , used to install any node packages, the node programm always looks up the packages from the current folder.
+
+....................................................................................
+				Node Packages
+
+How to install node packages which was distributed by others?
+
+npm install [<package-name>]
+
+You can find out the packages from npm registry server
+
+npm install | i  lodash --options
+
+npm i lodash 
+
+No options are given by default "--save"
+
+Options:
+
+ --save
+     for production + dev
+ --save-dev
+     -for only for dev 
+ --production
+    -for only production
+  -g
+    -for tool purpose -dev
+
+
+Application mode
+
+1.dev
+2.test
+3.prod
+
+dev : any dependency required for development only
+  --save-dev
+test : 
+   any dependency required for development only - test
+   --save-dev
+prod:
+  dependency used in dev and production... 
+  --save
+"dependencies": {
+    "lodash": "^4.17.21"
+  }
+..................................................................................
+			 Test /Dev Only Dependency
+.................................................................................
+
+Libs required for dev and test
+tools
+   -compilers,webservers
+   -testing libs and framworks 
+
+eg:
+  mocha - test runner is used for running test case
+  chai.js -test assertion lib used for writing test cases
+  jest -  test runner is used for running test cases
+
+"devDependencies": {
+    "chai": "^4.3.6"
+  }
+....................................................................................
+				
+....................................................................................
+	  How to install only production dependencies during build process
+....................................................................................
+if you want to use app in production mode, you have exclude the dependencies.
+
+npm i /npm install - install dev and production packages...
+ --->it scans package.json file which install everything(dev + prod)
+
+npm install --production
+  it scans package.json which install only from  dev dependencies
+.....................................................................................
+.....................................................................................
+....................................................................................
+			How to remove /uninstall package
+
+npm uninstall mocha --save-dev
+,,,,,,,,,,,,,........................................................................
+			Global Package
+..................................................................................
+         		
+
+Global package is installed not inside project, installed globally.
+Global packages are generally tools to create projects,webservers,test runtime like so.
+npm install nodemon -g
+npm install mocha -g
+npm install create-react-app -g
+etc...
+....................................................................................
+			 scripts
+....................................................................................
+ if you want to automat the js app workflows, scripts section is used.
+
+scripts has ,script command and task to be executed.
+
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+
+test - is command
+"echo \"Error: no test specified\" && exit 1" - task to be executed
+
+in npm we have many built in commands.
+eg
+ start
+ stop
+ publish
+ test
+ pack
+ postinstall
+ preinstall
+etc..
+https://docs.npmjs.com/cli/v8/using-npm/scripts#npm-rebuild
+
+Use case :
+ We can run node apps using scripts
+ we can run webservers using scripts
+ we can initalize the test env using scripts
+ we can start containers using scripts
+ etc...
+
+how to execute scripts commands?
+
+npm commandName
+eg
+npm start
+npm test
+npm pack
+etc..
+
+npm allows even custom commands
+
+subu:"task"
+build
+deploy
+compile
+
+if you want to custom script command?
+
+npm run commandName
+npm run subu
+npm run build
+...............
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

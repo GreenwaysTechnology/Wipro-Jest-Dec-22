@@ -1,22 +1,7 @@
-//return function from another function .
-function counter() {
-    //inner function 
-    return function () {
-        return 10
-    }
-}
-const func = counter()
-console.log(func())
+const info = require('./mylib')
+const CustomerService = require('./services/customer.service')
 
-let inc = () => {
-    //inner function 
-    return () => {
-        return 10
-    }
-}
-
-const func1 = counter()
-console.log(func1())
-
-inc = () => () => 10 
-console.log(inc()())
+console.log(info)
+console.log(info.name,info.status)
+let customerService = new CustomerService()
+console.log(customerService.findAll())
