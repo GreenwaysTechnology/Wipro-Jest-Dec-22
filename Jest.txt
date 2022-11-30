@@ -1,0 +1,970 @@
+				Testing
+.....................................................................................
+
+Testing is all about Quality verfication on developed software.
+
+Types of testing
+
+1.Unit Testing -  testing done during development cycle
+2.integraton testing
+3.functional testing
+4.etoe testing
+5.acceptance testing
+6.Performance testing
+7.smoke testing
+
+Unit Testing:
+ Helps to test the developed code to ensure the code meets quality.
+ Quality means here whether we have satsified the req.
+
+You are building calculator
+
+where you add functionality.
+
+ function add(a,b){
+    return a - b
+ }
+ add(10,10) => 0
+Here we have add funcition but its logic is substraction but our req is addition.
+
+During unit testing wen
+
+1.ensure that loops,methods /functions logic is working as per req
+2.misunderstood or incorrect logics like instead of asc or you might have implemented   dec
+3.in correct dat intalization - integers are req,but you have initalized floating points
+....................................................................................
+			  How to write unit testing in js
+
+Core javascript code/any framework/lib code, if you want test we have two things
+
+1.Test runtime - 
+   Mocha
+   Jasmine
+   jest
+2.Assertion libs
+   chai
+   jasmine
+   jest  - jest with react, jest with vue,js jest with jquery
+
+
+Jest is test runtime and also provides assertions apis as well.
+
+Advanced Concepts:
+
+1.Mocks,Stubs,Spy:
+   if you test any code which talks to apis.
+   create fake objects used for testing
+ sinon.js
+
+2.Reporters
+   Test Report  : Preparing the test report for whole apps..
+    jest-html reporter
+    jest-console reporter
+    jest-json  reporter.
+
+3.Code Coverage
+   How many test cases we have written for our biz logic.
+   Istanbul.js
+
+....................................................................................
+ 				Jest 
+....................................................................................
+
+Jest is runtime and assertion framework for building test cases.
+
+Plain javascript and Jest:
+..........................
+
+Project setup:
+
+>mkdir jestapps
+>cd jestapps
+
+jestapps>npm init --yes
+Wrote to E:\session\wipro\jestjs\jestapps\package.json:
+
+{
+  "name": "jestapps",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
+
+jestapps>code .
+
+jestapps>mkdir src
+
+install jest dependency:
+ since jest is dev dependency, we need to install --save-dev flag
+
+  npm install jest --save-dev
+
+We need to configure package.json to run jest..
+
+ "scripts": {
+    "test": "jest"
+  }
+
+E:\session\wipro\jestjs\jestapps>npm test
+
+> jestapps@1.0.0 test
+> jest
+
+No tests found, exiting with code 1
+Run with `--passWithNoTests` to exit with code 0
+In E:\session\wipro\jestjs\jestapps
+  2 files checked.
+  testMatch: **/__tests__/**/*.[jt]s?(x), **/?(*.)+(spec|test).[tj]s?(x) - 0 matches
+  testPathIgnorePatterns: \\node_modules\\ - 2 matches
+  testRegex:  - 0 matches
+Pattern:  - 0 matches
+
+in order to create tests
+
+project
+  src - source code
+  tests -  where all unit testing files/jest spec files to be present
+     |
+    file.spec.js
+
+eg:
+ jsapps
+    |
+    src
+  tests
+    hello.spec.js
+
+>npm test
+npm test
+
+> jestapps@1.0.0 test
+> jest
+
+ FAIL  tests/hello.spec.js
+  ● Test suite failed to run
+
+    Your test suite must contain at least one test.
+
+      at onResult (node_modules/@jest/core/build/TestScheduler.js:133:18)
+      at node_modules/@jest/core/build/TestScheduler.js:254:19
+      at node_modules/emittery/index.js:363:13
+          at Array.map (<anonymous>)
+      at Emittery.emit (node_modules/emittery/index.js:361:23)
+
+Test Suites: 1 failed, 1 total
+Tests:       0 total
+Snapshots:   0 total
+Time:        0.614 s
+Ran all test suites.
+...................................................................................
+				Jest Configuration
+
+By default , if you start jest, you dont need any configuration -  zero configuration
+
+Stll we can generate jest configurations
+
+in order to generate jest configuration, we have to install jest global tool.
+
+npm i jest -g
+
+create configuration files:
+>jest --init
+
+The following questions will help Jest to create a suitable configuration for your project
+
+√ Would you like to use Typescript for the configuration file? ... no
+√ Choose the test environment that will be used for testing » node
+√ Do you want Jest to add coverage reports? ... yes
+√ Which provider should be used to instrument code for coverage? » babel
+√ Automatically clear mock calls, instances, contexts and results before every test? ... yes
+
+📝  Configuration file created at E:\session\wipro\jestjs\jestapps\jest.config.js
+
+
+jest.config.js
+/*
+ * For a detailed explanation regarding each configuration property, visit:
+ * https://jestjs.io/docs/configuration
+ */
+
+module.exports = {
+  // All imported modules in your tests should be mocked automatically
+  // automock: false,
+
+  // Stop running tests after `n` failures
+  // bail: 0,
+
+  // The directory where Jest should store its cached dependency information
+  // cacheDirectory: "C:\\Users\\sasub\\AppData\\Local\\Temp\\jest",
+
+  // Automatically clear mock calls, instances, contexts and results before every test
+  clearMocks: true,
+
+  // Indicates whether the coverage information should be collected while executing the test
+  collectCoverage: true,
+
+  // An array of glob patterns indicating a set of files for which coverage information should be collected
+  // collectCoverageFrom: undefined,
+
+  // The directory where Jest should output its coverage files
+  coverageDirectory: "coverage",
+
+  // An array of regexp pattern strings used to skip coverage collection
+  // coveragePathIgnorePatterns: [
+  //   "\\\\node_modules\\\\"
+  // ],
+
+  // Indicates which provider should be used to instrument code for coverage
+  // coverageProvider: "babel",
+
+  // A list of reporter names that Jest uses when writing coverage reports
+  // coverageReporters: [
+  //   "json",
+  //   "text",
+  //   "lcov",
+  //   "clover"
+  // ],
+
+  // An object that configures minimum threshold enforcement for coverage results
+  // coverageThreshold: undefined,
+
+  // A path to a custom dependency extractor
+  // dependencyExtractor: undefined,
+
+  // Make calling deprecated APIs throw helpful error messages
+  // errorOnDeprecated: false,
+
+  // The default configuration for fake timers
+  // fakeTimers: {
+  //   "enableGlobally": false
+  // },
+
+  // Force coverage collection from ignored files using an array of glob patterns
+  // forceCoverageMatch: [],
+
+  // A path to a module which exports an async function that is triggered once before all test suites
+  // globalSetup: undefined,
+
+  // A path to a module which exports an async function that is triggered once after all test suites
+  // globalTeardown: undefined,
+
+  // A set of global variables that need to be available in all test environments
+  // globals: {},
+
+  // The maximum amount of workers used to run your tests. Can be specified as % or a number. E.g. maxWorkers: 10% will use 10% of your CPU amount + 1 as the maximum worker number. maxWorkers: 2 will use a maximum of 2 workers.
+  // maxWorkers: "50%",
+
+  // An array of directory names to be searched recursively up from the requiring module's location
+  // moduleDirectories: [
+  //   "node_modules"
+  // ],
+
+  // An array of file extensions your modules use
+  // moduleFileExtensions: [
+  //   "js",
+  //   "mjs",
+  //   "cjs",
+  //   "jsx",
+  //   "ts",
+  //   "tsx",
+  //   "json",
+  //   "node"
+  // ],
+
+  // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
+  // moduleNameMapper: {},
+
+  // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
+  // modulePathIgnorePatterns: [],
+
+  // Activates notifications for test results
+  // notify: false,
+
+  // An enum that specifies notification mode. Requires { notify: true }
+  // notifyMode: "failure-change",
+
+  // A preset that is used as a base for Jest's configuration
+  // preset: undefined,
+
+  // Run tests from one or more projects
+  // projects: undefined,
+
+  // Use this configuration option to add custom reporters to Jest
+  // reporters: undefined,
+
+  // Automatically reset mock state before every test
+  // resetMocks: false,
+
+  // Reset the module registry before running each individual test
+  // resetModules: false,
+
+  // A path to a custom resolver
+  // resolver: undefined,
+
+  // Automatically restore mock state and implementation before every test
+  // restoreMocks: false,
+
+  // The root directory that Jest should scan for tests and modules within
+  // rootDir: undefined,
+
+  // A list of paths to directories that Jest should use to search for files in
+  // roots: [
+  //   "<rootDir>"
+  // ],
+
+  // Allows you to use a custom runner instead of Jest's default test runner
+  // runner: "jest-runner",
+
+  // The paths to modules that run some code to configure or set up the testing environment before each test
+  // setupFiles: [],
+
+  // A list of paths to modules that run some code to configure or set up the testing framework before each test
+  // setupFilesAfterEnv: [],
+
+  // The number of seconds after which a test is considered as slow and reported as such in the results.
+  // slowTestThreshold: 5,
+
+  // A list of paths to snapshot serializer modules Jest should use for snapshot testing
+  // snapshotSerializers: [],
+
+  // The test environment that will be used for testing
+  // testEnvironment: "jest-environment-node",
+
+  // Options that will be passed to the testEnvironment
+  // testEnvironmentOptions: {},
+
+  // Adds a location field to test results
+  // testLocationInResults: false,
+
+  // The glob patterns Jest uses to detect test files
+  // testMatch: [
+  //   "**/__tests__/**/*.[jt]s?(x)",
+  //   "**/?(*.)+(spec|test).[tj]s?(x)"
+  // ],
+
+  // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
+  // testPathIgnorePatterns: [
+  //   "\\\\node_modules\\\\"
+  // ],
+
+  // The regexp pattern or array of patterns that Jest uses to detect test files
+  // testRegex: [],
+
+  // This option allows the use of a custom results processor
+  // testResultsProcessor: undefined,
+
+  // This option allows use of a custom test runner
+  // testRunner: "jest-circus/runner",
+
+  // A map from regular expressions to paths to transformers
+  // transform: undefined,
+
+  // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
+  // transformIgnorePatterns: [
+  //   "\\\\node_modules\\\\",
+  //   "\\.pnp\\.[^\\\\]+$"
+  // ],
+
+  // An array of regexp pattern strings that are matched against all modules before the module loader will automatically return a mock for them
+  // unmockedModulePathPatterns: undefined,
+
+  // Indicates whether each individual test should be reported during the run
+  // verbose: undefined,
+
+  // An array of regexp patterns that are matched against all source file paths before re-running tests in watch mode
+  // watchPathIgnorePatterns: [],
+
+  // Whether to use watchman for file crawling
+  // watchman: true,
+};
+....................................................................................
+			jest with build tools && Compilers
+
+webpack
+babel
+Vite
+Parcel
+Typescript
+...................................................................................
+			   Core Concepts
+
+There are style of writing unit testing
+
+1.TDD
+   imperative style of writing code
+  we depend on language syntax.
+  it is not more readable
+2.BDD
+   declarative style of writing code
+   code looks like english statement,more readable
+
+Jest is BDD style framework..
+
+Unit Testing generally ensures 
+   =>The output of the program is equal or matching the expecation of the requirment.
+
+  output of the programm must match to requirment(expecation)
+     
+     4  => 4
+ (2+2) => 4 =>true
+ (1+3) =>4
+ (1+3) =>4
+
+if output along with supplied input parameter is matching with req , then test is passed else test is failed.
+
+Matchers:
+  
+  Jest uses "matchers" object to let you test values in different ways.
+
+Matchers Types:
+1.Common Matchers
+2.Truthiness
+3.Numbers
+4.Strings
+5.Arrays and iterables
+6.Exceptions
+etc...
+
+Test Case and Test Suit:
+
+Test case is unit of representation => we cam compare aginst methods /functions
+Test Suit is collection of test cases => we can compare against class
+
+Test case:
+...........
+
+jest provides built in test case function.
+
+test('title',func)
+
+test('add two numbers',()=> {
+  expectations code
+})
+
+common Mather
+ expect() => Expecation object
+
+ExpecationObject api:
+{
+      not: {
+        toBe: [Function: throwingMatcher],
+        toBeCloseTo: [Function: throwingMatcher],
+        toBeDefined: [Function: throwingMatcher],
+        toBeFalsy: [Function: throwingMatcher],
+        toBeGreaterThan: [Function: throwingMatcher],
+        toBeGreaterThanOrEqual: [Function: throwingMatcher],
+        toBeInstanceOf: [Function: throwingMatcher],
+        toBeLessThan: [Function: throwingMatcher],
+        toBeLessThanOrEqual: [Function: throwingMatcher],
+        toBeNaN: [Function: throwingMatcher],
+        toBeNull: [Function: throwingMatcher],
+        toBeTruthy: [Function: throwingMatcher],
+        toBeUndefined: [Function: throwingMatcher],
+        toContain: [Function: throwingMatcher],
+        toContainEqual: [Function: throwingMatcher],
+  toBe: [Function (anonymous)],
+        toBeCloseTo: [Function (anonymous)],
+        toBeDefined: [Function (anonymous)],
+        toBeFalsy: [Function (anonymous)],
+        toBeGreaterThan: [Function (anonymous)],
+        toBeGreaterThanOrEqual: [Function (anonymous)],
+        toBeInstanceOf: [Function (anonymous)],
+        toBeLessThan: [Function (anonymous)],
+        toBeLessThanOrEqual: [Function (anonymous)],
+        toBeNaN: [Function (anonymous)],
+        toBeNull: [Function (anonymous)],
+        toBeTruthy: [Function (anonymous)],
+        toBeUndefined: [Function (anonymous)],
+        toContain: [Function (anonymous)],
+        toContainEqual: [Function (anonymous)],
+        toEqual: [Function (anonymous)],
+        toHaveLength: [Function (anonymous)],
+        toHaveProperty: [Function (anonymous)],
+        toMatch: [Function (anonymous)]
+}
+
+tests/hello.spec.js
+
+//test case 
+test('it should be hello', () => {
+    let output = 'Hello'
+    //output must match requirement- toEqual('Hello')
+    expect(output).toEqual('Hello')
+})
+
+npm test
+
+> jestapps@1.0.0 test
+> jest
+
+ PASS  tests/hello.spec.js
+  √ it should be hello (3 ms)
+
+----------|---------|----------|---------|---------|-------------------
+File      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
+----------|---------|----------|---------|---------|-------------------
+All files |       0 |        0 |       0 |       0 |
+----------|---------|----------|---------|---------|-------------------
+Test Suites: 1 passed, 1 total
+Tests:       1 passed, 1 total
+Snapshots:   0 total
+Time:        0.572 s, estimated 1 s
+Ran all test suites.
+...................................................................................
+Negative case: testing error use cases
+npm test
+
+> jestapps@1.0.0 test
+> jest
+
+ FAIL  tests/hello.spec.js
+  × it should be hello (4 ms)
+
+  ● it should be hello
+
+    expect(received).toEqual(expected) // deep equality
+
+    Expected: "Hello"
+    Received: "Hai"
+
+      3 |     let output = 'Hai'
+      4 |     //output must match requirement- toEqual('Hello')
+    > 5 |     expect(output).toEqual('Hello')
+        |                    ^
+      6 | })
+
+      at Object.toEqual (tests/hello.spec.js:5:20)
+
+----------|---------|----------|---------|---------|-------------------
+File      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
+----------|---------|----------|---------|---------|-------------------
+All files |       0 |        0 |       0 |       0 |
+----------|---------|----------|---------|---------|-------------------
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 1 total
+Snapshots:   0 total
+Time:        0.587 s, estimated 1 s
+Ran all test suites.
+..................................................................................
+			   Testing against biz methods
+..................................................................................
+
+src/hello.js
+function sayHello() {
+    return 'Hello'
+}
+module.exports = sayHello
+
+tests/hello.spec.js
+
+const sayHello = require('../src/hello')
+// //test case 
+// test('it should be hello', () => {
+//     let output = 'Hai'
+//     //output must match requirement- toEqual('Hello')
+//     expect(output).toEqual('Hello')
+// })
+
+test('it should hello', () => {
+    let output = sayHello()
+    expect(output).toEqual('Hello')
+})
+................................................................................
+			  Test case for Given user story
+..................................................................................
+
+As per testing practice
+
+we need to test
+
+1.postive case
+  toBe / should be   
+2.negative case
+  notTobe / should not be
+
+
+
+src/add.js
+
+function add(a, b) {
+    return a + b
+}
+
+module.exports = add 
+
+tests/adder.spec.js
+const add = require('../src/adder')
+//postive case 
+test('two plus two is four', () => {
+    // let output = 2 + 2
+    let output = add(2, 2)
+    expect(output).toBe(4)
+})
+
+test('1 plus three is four', () => {
+    let output = add(1, 3)
+    expect(output).toBe(4)
+})
+//negative case 
+test('two plus two not four', () => {
+    let output = add(2,2)
+    expect(output).not.toBe(3)
+})
+..................................................................................
+			   Object Property Matching
+...................................................................................
+
+toEqual
+toStrictEqual
+
+
+
+test('Object property matching', () => {
+    let profile = { id: 1, name: 'subramaian', city: 'coimbatore' }
+    expect(profile).toEqual({ id: 1, name: 'subramaian', city: 'coimbatore' })
+})
+Here test passes, because toEqual matches each and every property.
+
+test('Object property matching with undefined', () => {
+    let profile = { id: 1, name: 'subramaian', city: undefined}
+    expect(profile).toEqual({ id: 1, name: 'subramaian' })
+})
+
+Here test passes still, but here output object has property its value is undefined
+when compare to with "toEqual" which simply ignores undefined properties
+
+What if i want strict comparasion - toStrictEqual
+
+test('Object property matching with undefined', () => {
+    // let profile = { id: 1, name: 'subramaian', city: undefined}
+    let profile = { id: 1, name: 'subramaian', city: 'coimbatore'}
+
+    //expect(profile).toEqual({ id: 1, name: 'subramaian' })
+    expect(profile).toStrictEqual({ id: 1, name: 'subramaian',city:'coimbatore' })
+})
+...................................................................................
+				Advanced Booleans
+..................................................................................
+Truthiness Matchers:
+.....................
+
+Generally undefined,null,false are falsy values.
+ Sometimes you dont want to treat theses values different
+
+instead of toBe ,
+PostiveCase
+ toBeNull - matches only null
+ 
+//Null testing 
+
+test('Null tester', () => {
+  let user = null
+  expect(user).toBeNull()
+  expect(user).toBeDefined()
+  expect(user).not.toBeUndefined()
+  expect(user).not.toBeTruthy()
+  expect(user).toBeFalsy()
+})
+....................................................................................
+				Numbers
+.....................................................................................
+
+For whole numbers
+
+
+//comparsional test 
+test('comparsional test for whole numbers', () => {
+    let value = 100
+    //100 should be greaterthan 10
+    expect(value).toBeGreaterThan(10)
+    expect(value).toBeGreaterThanOrEqual(100)
+    expect(value).toBeLessThan(200)
+    //equal test   =  toBe or equal 
+    expect(value).toBe(100)
+    expect(value).toEqual(100)
+
+})
+
+For floating point equality, use "toBeCloseTo" instead of toEqual
+
+test('comparsional test for float points', () => {
+    let value = 0.1 + 0.2
+    expect(value).toBeCloseTo(0.3)
+})
+....................................................................................
+			   Strings
+....................................................................................
+You can test strings using toEqual, toMatch.
+toMatch method is enabled with "Regular Expression"
+
+
+test('string tests', () => {
+    let value = 'hello'
+    expect(value).toEqual('hello')
+})
+
+test('string tests to match', () => {
+    let value = 'hello'
+    expect(value).toMatch(/he/)
+})
+.....................................................................................
+			Arrays
+.....................................................................................
+toContain
+not.toContain
+
+test('arrays', () => {
+    const list = ['subramanian', 'ram', 'john', 'karthik']
+    expect(list).toContain('subramanian')
+    expect(list).not.toContain('joe')
+})
+....................................................................................
+			Exceptions
+
+if you want to test wheter a particular function throws an error when its called
+toThrow
+
+
+function sayHello(message) {
+    if (message !== 'hello') {
+       throw new Error('hello message was missing')
+    }
+}
+
+
+test('exception should be thrown', () => {
+    expect(()=>sayHello()).toThrow('hello message was missing')
+})
+
+Note:
+ the function that throws exception needs to be called within a wrapping function inside expect function otherwise  toThrow method will not work.
+....................................................................................
+			 How to test async code?
+...................................................................................
+
+It is common in js to write async code, and runs async, when you have code that runs async jest needs to know the code it is testing has completed, before it can move on to another test.
+
+
+How to Test promises?
+
+
+function delay() {
+    return Promise.resolve('hello')
+}
+module.exports = delay
+
+const delay = require('../src/delay')
+
+test('Promise test', () => {
+   return delay().then(res => {
+        expect(res).toBe('hello')
+    })
+})
+..................................................................................
+If there is more delay(more time) is taken for promises to resolve?
+
+
+function delay() {
+    //return Promise.resolve('hello')
+    return new Promise((resolve, reject) => {
+        setTimeout(resolve, 5000, 'hello')
+    })
+}
+module.exports = delay
+
+const delay = require('../src/delay')
+
+test('Promise test', () => {
+   return delay().then(res => {
+        expect(res).toBe('hello')
+    })
+})
+output:
+E:\session\wipro\jestjs\jestapps>npm test
+
+> jestapps@1.0.0 test
+> jest
+
+ FAIL  tests/promise.spec.js (5.489 s)
+  ● Promise test
+
+    thrown: "Exceeded timeout of 5000 ms for a test.
+    Use jest.setTimeout(newTimeout) to increase the timeout value, if this is a long-running test."
+
+      1 | const delay = require('../src/delay')
+      2 |
+    > 3 | test('Promise test', () => {
+        | ^
+      4 |    return delay().then(res => {
+      5 |         expect(res).toBe('hello')
+      6 |     })
+
+      at Object.test (tests/promise.spec.js:3:1)
+
+ PASS  tests/numbers.spec.js
+ PASS  tests/exceptions.spec.js
+ PASS  tests/hello.spec.js
+ PASS  tests/faslytests.spec.js
+ PASS  tests/strings.spec.js
+ PASS  tests/adder.spec.js
+ PASS  tests/objectmatch.spec.js
+ PASS  tests/arrays.spec.js
+
+Test Suites: 1 failed, 8 passed, 9 total
+Tests:       1 failed, 13 passed, 14 total
+Snapshots:   0 total
+Time:        6.93 s
+Ran all test suites.
+
+Why this error?
+  Jest uses some timeout to run test cases since our async code takes more time than jest time, it throws error.
+
+How to fix this problem:
+
+jest.config.js file
+
+module.exports = {
+  testTimeout:10000
+}
+You have to increase the timeout.
+.....................................................................................
+			 Promise with async...await
+..................................................................................
+
+src/errorpromise.js
+function rejectMe() {
+    return Promise.reject('error')
+}
+
+module.exports = rejectMe
+
+const delay = require('../src/delay')
+const rejectMe = require('../src/errorpromise')
+
+
+test('async await test', async () => {
+    const data = await delay()
+    expect(data).toBe('hello')
+})
+
+test('async await test with error', async () => {
+    await expect(rejectMe()).rejects.toMatch('error in code')
+})
+................................................................................
+			 How to test callbacks
+................................................................................
+
+src/cb.js
+function fetchData(callback) {
+    setTimeout(callback, 1000, 'Hello')
+}
+module.exports= fetchData
+
+test('callback tests', () => {
+    fetchData(function (res) {
+        expect(res).toBe('Hello')
+    })
+})
+.....................................................................................
+			   Test Life cycles
+			(Setup and TearDown)
+...................................................................................
+
+In a single file , we may have many test cases, for each test case i want to run some initalization api.
+
+beforeEach -  before running any test this method is called
+afterEach - after running any test case this method is called
+
+
+beforeEach(() => {
+    console.log('init')
+})
+afterEach(() => {
+    console.log('destrory')
+})
+test('one', () => {
+    expect('hello').toBe('hello')
+})
+test('two', () => {
+    expect('hello').toBe('hello')
+})
+test('three', () => {
+    expect('hello').toBe('hello')
+})
+
+One Time setup:
+...............
+beforeAll - Running before any tests
+AfterAll  - Running after all tests
+
+beforeAll(() => {
+    console.log('init -one time')
+})
+afterAll(() => {
+    console.log('destroy -one time')
+})
+beforeEach(() => {
+    console.log('init')
+})
+afterEach(() => {
+    console.log('destrory')
+})
+test('one', () => {
+    expect('hello').toBe('hello')
+})
+test('two', () => {
+    expect('hello').toBe('hello')
+})
+test('three', () => {
+    expect('hello').toBe('hello')
+})
+....................................................................................
+			Test Suit and how to group test cases
+
+describe() -  Define Test suit
+test - Define Test case
+
+//suit 
+describe('order module test', () => {
+    //life cycle apis
+    beforeEach(() => {
+        console.log('order init')
+    })
+    afterEach(() => {
+        console.log('order destrory')
+    })
+    //order test cases 
+    test('order must have products', () => {
+        expect('products').toBe('products')
+    })
+    //order test cases 
+    test('order must have customers', () => {
+        expect('customers').toBe('customers')
+    })
+    //order test cases 
+    test('order must have items', () => {
+        expect('items').toBe('items')
+    })
+    //order test cases 
+    test('order must have stocks', () => {
+        expect('stocks').toBe('stocks')
+    })
+
+})
+.....................................................................................
+			How to test Dependency
+				Mock	
+
+
+
+
+
+
+
+
